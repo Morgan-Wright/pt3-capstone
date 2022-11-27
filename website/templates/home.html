@@ -1,0 +1,60 @@
+{%  extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+<h1 align="center">Weather</h1>
+<ul class="list-group list-group-flush">
+    {% for city in user.city %}
+    <li class="list-group-item">
+        {{ city.name }}
+        <button type="button" class="close">
+            <span aria-hidden="true">&timesb;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+<form method="POST">
+    <input name="city" id="city" class="form-control" placeholder="Search City" type="search"></input>
+    <br>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">add city</button>
+    </div>
+</form>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+                {% for weather in weather_data %}
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">{{ weather.city }}</span>
+                                    <br>
+                                    <span class="subtitle">{{ weather.temperature }}° F</span>
+                                    <br> {{ weather.description }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="media-right">
+                            <a href="{{ url_for('views.delete_city', name=weather.city) }}">
+                                <button type="button" class="close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+</footer>
+{% endblock %}
